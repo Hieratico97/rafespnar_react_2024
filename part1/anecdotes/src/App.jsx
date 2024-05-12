@@ -7,9 +7,15 @@ const Button =(props)=>{
   return (  <button onClick={props.handleClick}>next anecdotes</button>)
   
 }
+const UpVote =(props)=>{
+ 
+  return ( 
+    <button onClick={() => props.upVoteClick(props.selected)}>upVote</button>
+    )
+  
+}
 
-console.log(getRandomInt(3));
-// Expected output: 0, 1 or 2
+
 
 const App = () => {
   const anecdotes = [
@@ -23,13 +29,29 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
   const handleClick =() => {setSelected(getRandomInt(anecdotes.length))}
-
+ 
+  const [upVote, setUpVote] = useState({})
   const [selected, setSelected] = useState(0)
+  const upVoteClick=()=> {
+    
+    const copy ={...upVote}
+    copy[selected] = (copy[selected] || 0) + 1;
+    
+    setUpVote(copy)
+    
+  }
+ 
 
   return (
     <div>
-    <p>{anecdotes[selected]}</p>
+    <table>
+      <tbody>
+    <tr>{anecdotes[selected]} </tr>
+    <tr>has {upVote[selected] || 0} votes</tr>
+    </tbody>
+    </table>
     <Button handleClick={handleClick} />
+    <UpVote upVoteClick={upVoteClick} selected = {selected} />
     </div>
   )
 }
