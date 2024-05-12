@@ -5,11 +5,34 @@ const Button = (props) =>  (
     {props.text}
   </button>
   )
-const Counter = ({text,counter})=> <p>{text} {counter}</p>
+  const StatisticLine = ({ text, value }) => {
+    if (text === "good") {
+      return <><td>{text}</td><td> {value}</td></>
+    }
+    if (text === "neutral") {
+      return <><td>{text}</td><td> {value}</td></>
+    }
+    if (text === "bad") {
+      return <><td>{text}</td><td> {value}</td></>
+    }
+    if (text === "all") {
+      return <><td>{text}</td><td> {value}</td></>
+    }
+    if (text === "average") {
+      return <><td>{text}</td><td> {value}</td></>
+    }
+    if (text === "positive") {
+      return <><td>{text}</td><td> {value}%</td></>
+    }
+}
+    
+   
+  
+  
 const Statistics = ({good, neutral, bad}) => {
 const sum = good + neutral + bad
-const average = (good -bad )/sum
-const positive = (good/sum)*100
+const average = ((good -bad )/sum).toFixed(2)
+const positive = ((good/sum)*100).toFixed(2)
 if (good===0 && neutral===0 && bad===0) {
   return(
     <div>
@@ -21,15 +44,17 @@ if (good===0 && neutral===0 && bad===0) {
 }
 else {
     return (
-      <div>
-      <h1>Statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {sum}</p> 
-      <p>average {average}</p>
-      <p>positive {positive}%</p>
-      </div>
+      <table>
+          <tbody>
+          <tr><StatisticLine text="good" value={good} /></tr>
+            <tr><StatisticLine text="neutral" value={neutral} /></tr>
+            <tr><StatisticLine text="bad" value={bad} /></tr>
+            <tr><StatisticLine text="all" value={sum} /></tr>
+            <tr><StatisticLine text="average" value={average} /></tr>
+            <tr><StatisticLine text="positive" value={positive} /></tr>
+       </tbody>
+      </table>
+   
   )
 
 
