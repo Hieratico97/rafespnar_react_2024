@@ -32,6 +32,8 @@ const App = () => {
  
   const [upVote, setUpVote] = useState({})
   const [selected, setSelected] = useState(0)
+ 
+  
   const upVoteClick=()=> {
     
     const copy ={...upVote}
@@ -40,18 +42,43 @@ const App = () => {
     setUpVote(copy)
     
   }
+  const mayor = () => {
+    let maxIndex = 0;
+
+    for (let i = 0; i < anecdotes.length; i++) {
+      if (upVote[i] > upVote[maxIndex] || upVote[maxIndex] === undefined) {
+        maxIndex = i
+      }
+    }
+    return maxIndex
+  }
  
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
     <table>
       <tbody>
-    <tr>{anecdotes[selected]} </tr>
-    <tr>has {upVote[selected] || 0} votes</tr>
+      
+    <tr><td>{anecdotes[selected]}</td></tr>
+    <tr><td>has {upVote[selected] || 0} votes</td></tr>
     </tbody>
     </table>
     <Button handleClick={handleClick} />
     <UpVote upVoteClick={upVoteClick} selected = {selected} />
+    
+    <h1>Anecdote with most</h1>
+ 
+    <table>
+      <tbody>
+      
+    <tr><td>{anecdotes[mayor()]}</td></tr>
+    <tr><td>has {upVote[mayor()] || 0} votes</td></tr>
+    </tbody>
+    </table>
+
+   
+    
     </div>
   )
 }
