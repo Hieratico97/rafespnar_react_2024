@@ -16,7 +16,7 @@ const UpVote =(props)=>{
 }
 
 
-
+// 
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
