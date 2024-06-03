@@ -3,13 +3,25 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import noteService from './services/modulo'
 import modulo from './services/modulo'
+import './index.css'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-  const [newButtonDel, setButtonDel] = useState('')
+  const [addMessage, setAddMessage] = useState(null)
   const [search, setSearch] = useState('')
+  const Notification = ({ message }) => {
+    if (message === null) {
+      return null
+    }
+  
+    return (
+      <div className="message">
+        {message}
+      </div>
+    )
+  }
   useEffect(() => {
     console.log('effect')
     modulo
@@ -48,7 +60,12 @@ const App = () => {
       number: newNumber
       
     }
-  
+    setAddMessage(
+      `Added ${newName}`
+    )
+    setTimeout(() => {
+      setAddMessage(null)
+    }, 5000)
     modulo
       .create(personObject)
       .then(response => {
@@ -98,6 +115,7 @@ const App = () => {
     <div>
       
       <h2>Phonebook</h2>
+      <Notification message={addMessage} />
       <div>
       filter show with <input value={search} onChange={handleSearch}/>
       </div>
