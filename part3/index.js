@@ -38,7 +38,8 @@ app.get('/info', (request, response) => {
   const requestTime = new Date().toLocaleString()
   response.send(`
   <p>Persons ${maxId}</p>
-  <p>${requestTime}</p>`
+  <p>${requestTime}</p>
+  `
 
   )
 })
@@ -51,6 +52,12 @@ app.get('/api/persons/:id', (request, response) => {
   } else {
     response.status(404).end()
   }
+})
+app.delete('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  persons = persons.filter(persons => persons.id !== id)
+
+  response.status(204).end()
 })
 
 
