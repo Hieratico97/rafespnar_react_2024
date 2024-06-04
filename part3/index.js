@@ -28,7 +28,7 @@ app.use(express.json())
 
 
 
-app.get('/api/persons', (request, response) => {
+app.get('/api/persons', (request, response) => { 
   response.json(persons)
 })
 app.get('/info', (request, response) => {
@@ -44,15 +44,15 @@ app.get('/info', (request, response) => {
 })
 app.get('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
-  const Persons = persons.find(note => note.id === id)
-  response.json(persons)
-  if (persons) {
-    response.json(persons)
+  const person = persons.find(note => note.id === id)
+  
+  if (person) {
+    response.json(person)
   } else {
     response.status(404).end()
   }
 })
-})
+
 
 
 
