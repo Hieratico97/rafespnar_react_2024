@@ -79,7 +79,7 @@
 
     }
     const handleDelete = id => {
-      const url = `http://localhost:3001/api/persons/${id}`
+      const url = `/api/persons/${id}`
       if (window.confirm("delete?")) {
       axios
         .delete(url)
