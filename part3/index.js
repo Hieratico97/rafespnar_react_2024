@@ -10,7 +10,7 @@ morgan.token('content', (request, response) => {
 })
 app.use(morgan(':method  :url  :status :res[content-length]- :response-time ms :content'))
 const cors = require('cors')
-
+app.use(express.static('dist'))
 app.use(cors())
 let persons = [
   { 
