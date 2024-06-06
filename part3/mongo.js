@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const Note = require('./models/note')
 if (process.argv.length<3) {
   console.log('give password as argument')
   process.exit(1)
@@ -17,10 +17,7 @@ mongoose.set('strictQuery',false)
 
 mongoose.connect(url)
 
-const noteSchema = new mongoose.Schema({
-  name: String,
-  number: String,
-})
+
 
 const Person = mongoose.model('Person', noteSchema)
 
