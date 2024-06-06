@@ -6,6 +6,8 @@ if (process.argv.length<3) {
 }
 
 const password = process.argv[2]
+const nameargv = process.argv[3]
+const numberargv = process.argv[4]
 
 const url =
   `mongodb+srv://rafalive98:${password}@cluster0.mfagaed.mongodb.net/noteApp?
@@ -16,18 +18,29 @@ mongoose.set('strictQuery',false)
 mongoose.connect(url)
 
 const noteSchema = new mongoose.Schema({
-  content: String,
-  important: Boolean,
+  name: String,
+  number: String,
 })
 
-const Note = mongoose.model('Note', noteSchema)
+const Person = mongoose.model('Person', noteSchema)
 
-const note = new Note({
-  content: 'HTML is easy',
-  important: true,
+if (nameargv && numberargv){
+const person = new Person({
+  name: nameargv,
+  number: numberargv,
 })
 
-note.save().then(result => {
-  console.log('note saved!')
+person.save().then(result => {
+  console.log(`added ${result.name} number ${result.number} to the phonebook`  ,)
   mongoose.connection.close()
 })
+} else if ( process.argv.length == 3) {
+  console.log("phonebook:")
+Person.find({}).then(result => {
+  result.forEach(person => {
+    
+    console.log(`${person.name} ${person.number}`  )
+  })
+  mongoose.connection.close()
+})
+}
