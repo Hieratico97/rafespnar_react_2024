@@ -1,9 +1,10 @@
+require('dotenv').config()
 const express = require('express')
 
 const morgan = require('morgan')
 
 const mongoose = require('mongoose')
-require('dotenv').config()
+
 
 
 const Person = require('./models/person')
@@ -34,7 +35,7 @@ app.get('/api/persons', (request, response) => {
 })
 app.get('/info', (request, response) => {
   Person.find({}).then(persons => {
-  const maxId = Person.length > 0
+  const maxId = person.length > 0
   ? Math.max(...Person.map(n => n.id)) 
   : 0
   const requestTime = new Date().toLocaleString()
@@ -58,8 +59,8 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 const generateId = () => {
-  const maxId = Person.length > 0
-    ? Math.max(...Person.map(n => n.id))
+  const maxId = person.length > 0
+    ? Math.max(...person.map(n => n.id))
     : 0
   return maxId + 1
 }
