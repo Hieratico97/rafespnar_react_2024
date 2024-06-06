@@ -53,33 +53,28 @@ app.get('/api/persons/:id', (request, response) => {
   })
 })
 app.delete('/api/persons/:id', (request, response) => {
-  Person.findById(request.params.id).then(person => {
+  Person.findByIdAndDelete(request.params.id).then(person => {
     response.json(person)
   })
 })
 
-const generateId = () => {
-  const maxId = person.length > 0
-    ? Math.max(...person.map(n => n.id))
-    : 0
-  return maxId + 1
-}
+
 app.post('/api/persons', (request, response) => {
   const body = request.body
 
-  if (body.content === undefined) {
+  if (!body.name || !body.number) {
     return response.status(400).json({ error: 'content missing' })
   }
   
 
 
-  const person = {
+  const newPerson = new Person ({
     name: body.name,
     number: body.number,
-    id: generateId(),
-  }
+    
+  })
 
-  person.save().then(savedPerson => {
+  newPerson.save().then(savedPerson => {
     response.json(savedPerson)
   })
 
