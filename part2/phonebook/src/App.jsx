@@ -11,6 +11,7 @@
     const [newNumber, setNewNumber] = useState('')
     const [addMessage, setAddMessage] = useState(null)
     const [search, setSearch] = useState('')
+    const [errorMessage, setErrorMessage] = useState(null)
     const Notification = ({ message }) => {
       if (message === null) {
         return null
@@ -48,24 +49,20 @@
           setNewNumber('')
           })
         }else{
-
-
-
-      
-        
-      
-    
+          if  (newName.length > 3) {
       const personObject = {
         name: newName,
         number: newNumber
         
       }
+     
       setAddMessage(
         `Added ${newName}`
       )
       setTimeout(() => {
         setAddMessage(null)
       }, 5000)
+    
       modulo
         .create(personObject)
         .then(response => {
@@ -75,7 +72,19 @@
           setNewName('')
           setNewNumber('')
         })
+        .catch(error => {
+          setErrorMessage(error.response.data.error);
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
+        }
+      )}else{
+        setErrorMessage(`${error.response.data.error}`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
       }
+    }
 
     }
     const handleDelete = id => {
@@ -116,6 +125,7 @@
         
         <h2>Phonebook</h2>
         <Notification message={addMessage} />
+        <Notification errorMessage={errorMessage} />
         <div>
         filter show with <input value={search} onChange={handleSearch}/>
         </div>
