@@ -72,7 +72,7 @@ app.get('/api/persons/:id', (request, response, next) => {
   })
   .catch(error => next(error))
 })
-app.delete('/api/persons/:id', (request, response, next) => {
+app.delete('/api/persons/:id', (request, response,) => {
   Person.findByIdAndDelete(request.params.id).then(person => {
     response.json(person)
   })
