@@ -3,14 +3,13 @@ const express = require('express')
 
 const morgan = require('morgan')
 
-const mongoose = require('mongoose')
+
 
 
 
 const Person = require('./models/person')
 const app = express()
 const cors = require('cors')
-const person = require('./models/person')
 
 app.use(morgan('tiny'))  
 app.use(morgan(':method  :url  :status :res[content-length]- :response-time ms :content'))
@@ -19,7 +18,7 @@ app.use(cors())
 app.use(express.static('build'))
 app.use(express.json())
 
-morgan.token('content', (request, response) => {
+morgan.token('content', (request) => {
   if (request.method === 'POST') {
     return JSON.stringify(request.body)
   } 
@@ -72,7 +71,7 @@ app.get('/api/persons/:id', (request, response, next) => {
   })
   .catch(error => next(error))
 })
-app.delete('/api/persons/:id', (request, response,) => {
+app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndDelete(request.params.id).then(person => {
     response.json(person)
   })
@@ -110,7 +109,8 @@ app.put('/api/persons/:id', (request, response, next) => {
     })
     .catch(error => next(error))
 })
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3000
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
