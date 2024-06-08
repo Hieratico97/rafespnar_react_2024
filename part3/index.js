@@ -2,15 +2,18 @@ require('dotenv').config()
 const express = require('express')
 
 const morgan = require('morgan')
-
+const app = require('./app') // la aplicación Express real
+const config = require('./utils/config')
+const logger = require('./utils/logger')
 
 
 
 
 const Person = require('./models/person')
-const app = express()
 const cors = require('cors')
 
+
+logger.info(`Server running on port ${config.PORT}`)
 app.use(morgan('tiny'))  
 app.use(morgan(':method  :url  :status :res[content-length]- :response-time ms :content'))
 app.use(express.static('dist'))
