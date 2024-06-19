@@ -1,18 +1,27 @@
-const mongoose = require('mongoose')
+const express = require('express')
+const Blog = require('../controllers/blog')
 
-const blogSchema = new mongoose.Schema({
-    title: String,
-    author: String,
-    url: String,
-    likes: Number
+const blogsRouter = express.Router()
+
+// Obtener todos los blogs
+blogsRouter.get('/', async (request, response) => {
+    Blog
+      .find({})
+      .then(blogs => {
+        response.json(blogs)
+      })
   })
 
-blogSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.__v
-  }
-})
+// Crear un nuevo blog
+blogsRouter.post('/',  (request, response) => {
+    const blog = new Blog(request.body)
+  
+    blog
+      .save()
+      .then(result => {
+        response.status(201).json(result)
+      })
+  })
 
-module.exports = mongoose.model('Blog', blogSchema)
+
+module.exports = blogsRouter
